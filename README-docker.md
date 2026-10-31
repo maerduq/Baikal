@@ -11,8 +11,4 @@ Then run the image with:
 docker run -it --init --rm --publish 8000:80 baikal:{tag}
 ```
 
-To save the image to file:
-
-```bash
-docker save baikal:{tag} -o baikal-{tag}.tar
-```
+Or copy-paste the tar-file to your server that has been created in the `/out` folder.
