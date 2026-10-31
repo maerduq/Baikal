@@ -1,6 +1,9 @@
 .git
+.devcontainer
+.github
 build
 vendor
+out
 config/baikal.yaml
 Specific/INSTALL_DISABLED
 Specific/db/*.sqlite
