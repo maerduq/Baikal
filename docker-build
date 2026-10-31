@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+
+# Determine the dynamic tag
+# First, check if HEAD is exactly on a tag
+tag=$(git describe --tags --exact-match 2>/dev/null)
+
+# If not on a tag, check for tags pointing at HEAD
+if [ -z "$tag" ]; then
+  tags_at_head=$(git tag --points-at HEAD 2>/dev/null)
+  if [ -n "$tags_at_head" ]; then
+    # Sort alphabetically and pick the first one
+    tag=$(echo "$tags_at_head" | tr '\n' '\0' | sort -z | tr '\0' '\n' | head -n 1)
+  fi
+fi
+
+# If still no tag, use the short commit hash
+if [ -z "$tag" ]; then
+  tag=$(git rev-parse --short HEAD)
+fi
+
+# Output the tag being used
+echo "Using tag: $tag"
+
+# Build the docker image with the dynamic tag
+docker build . -t baikal:$tag
