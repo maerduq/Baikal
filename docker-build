@@ -24,3 +24,9 @@ echo "Using tag: $tag"
 # Build the docker image with the dynamic tag
 docker build . -t baikal:$tag
 docker save baikal:$tag -o out/baikal-$tag.tar
+
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$(pwd)/out:/out" \
+  anchore/syft:latest \
+  baikal:$tag -o cyclonedx-json=/out/sbom-$tag.json
