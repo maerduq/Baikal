@@ -3,9 +3,9 @@ FROM php:8.4-apache
 # Install MySQL client, server, and other dependencies
 RUN apt-get update \
 	&& apt-get install -y \
-        # libxml2 libxml2-dev\
         libzip-dev \
-        # git \
+    && apt-get remove -y \
+        openssl \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
